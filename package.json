@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node -r dotenv/config bin/www",
     "develop": "nodemon -r dotenv/config bin/www",
+    "test": "jest",
     "db:create": "sequelize db:create",
     "db:drop": "sequelize db:drop",
     "db:migrate": "sequelize db:migrate",
@@ -25,6 +26,8 @@
     "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "jest": "^28.1.0",
+    "nodemon": "^2.0.16",
+    "supertest": "^6.2.3"
   }
 }
