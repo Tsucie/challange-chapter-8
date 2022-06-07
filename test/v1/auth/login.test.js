@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../../app');
 
-describe('/v1/auth/login', () => {
+describe('POST /v1/auth/login', () => {
   it("should response with 201 as status code", async () => {
     const email = "adji@binar.com";
     const password = "rahasia";

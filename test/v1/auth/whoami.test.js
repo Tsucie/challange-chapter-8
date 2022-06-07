@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../../app');
 
-describe('/v1/auth/whoami', () => {
+describe('GET /v1/auth/whoami', () => {
   it("should response with 200 as status code", async () => {
     const userParam = { id: 1 };
 
