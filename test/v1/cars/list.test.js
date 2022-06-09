@@ -14,7 +14,7 @@ describe('GET /v1/cars', () => {
     });
     return car;
   });
-  afterEach(async () => car.destroy());
+  afterEach(() => car.destroy());
 
   it("should response with 200 as status code", async () => {
     const page = 1;
@@ -27,12 +27,17 @@ describe('GET /v1/cars', () => {
       .then((res) => {
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              name: car.name,
+              price: car.price,
+              size: car.size,
+              image: car.image,
+              isCurrentlyRented: car.isCurrentlyRented,
+            }),
+          ]),
           expect.objectContaining({
-            name,
-            price,
-            size,
-            image,
-            isCurrentlyRented,
+            pagination: expect.any(Object),
           })
         );
       });

@@ -14,16 +14,15 @@ describe('POST /v1/auth/login', () => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
           expect.objectContaining({
-            ...res.body,
-            accessToken
+            accessToken: expect.any(String),
           })
         );
       });
   });
 
   it("should response with 404 as status code", async () => {
-    const email = "adji@binar.com";
-    const password = "rahasia";
+    const email = "ucok@binar.com";
+    const password = "abogoboga";
 
     return request(app)
       .post("/v1/auth/login")
@@ -33,9 +32,10 @@ describe('POST /v1/auth/login', () => {
         expect(res.statusCode).toBe(404);
         expect(res.body).toEqual(
           expect.objectContaining({
-            err: {
-              name: expect.any(String),
+            error: {
+              details: expect.any(Object),
               message: expect.any(String),
+              name: expect.any(String),
             },
           })
         );
@@ -44,7 +44,7 @@ describe('POST /v1/auth/login', () => {
 
   it("should response with 401 as status code", async () => {
     const email = "adji@binar.com";
-    const password = "rahasia";
+    const password = "abogoboga";
 
     return request(app)
       .post("/v1/auth/login")
@@ -54,9 +54,10 @@ describe('POST /v1/auth/login', () => {
         expect(res.statusCode).toBe(401);
         expect(res.body).toEqual(
           expect.objectContaining({
-            err: {
-              name: expect.any(String),
+            error: {
+              details: expect.any(Object),
               message: expect.any(String),
+              name: expect.any(String),
             },
           })
         );

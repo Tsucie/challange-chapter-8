@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../../app');
+const app = require('../../../../app');
 const { Car } = require('../../../../app/models');
 
 describe('GET /v1/cars/:id', () => {
@@ -14,7 +14,7 @@ describe('GET /v1/cars/:id', () => {
     });
     return car;
   });
-  afterEach(async () => car.destroy());
+  afterEach(() => car.destroy());
 
   it("should response with 200 as status code", async () => {
     return request(app)
@@ -23,12 +23,11 @@ describe('GET /v1/cars/:id', () => {
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual(
           expect.objectContaining({
-            ...res.body,
-            name,
-            price,
-            size,
-            image,
-            isCurrentlyRented,
+            name: car.name,
+            price: car.price,
+            size: car.size,
+            image: car.image,
+            isCurrentlyRented: car.isCurrentlyRented,
           })
         );
       });

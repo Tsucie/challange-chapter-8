@@ -1,8 +1,24 @@
 const request = require('supertest');
-const app = require('../../../app');
+const app = require('../../../../app');
 const { Car } = require('../../../../app/models');
 
 describe('POST /v1/cars/:id/rent', () => {
+  let token;
+  beforeAll((done) => {
+    request(app)
+      .post('/v1/auth/login')
+      .send({
+        email: 'fikri@binar.co.id',
+        password: '123456',
+      })
+      .expect(201)
+      .end((err, res) => {
+        if(err) throw err;
+        token = res.body.token;
+        done();
+      });
+  });
+
   let car;
   beforeEach(async () => {
     car = await Car.create({
@@ -14,12 +30,13 @@ describe('POST /v1/cars/:id/rent', () => {
     });
     return car;
   });
-  afterEach(async () => car.destroy());
+  afterEach(() => car.destroy());
 
   it("should response with 201 as status code", async () => {
     return request(app)
       .post(`/v1/cars/${car.id}/rent`)
       .set("Content-Type", "application/json")
+      .set("authorization", `Bearer ${token}`)
       .then((res) => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
@@ -38,6 +55,7 @@ describe('POST /v1/cars/:id/rent', () => {
     return request(app)
       .post(`/v1/cars/${car.id}/rent`)
       .set("Content-Type", "application/json")
+      .set("authorization", `Bearer ${token}`)
       .then((res) => {
         expect(res.statusCode).toBe(422);
         expect(res.body).toEqual(

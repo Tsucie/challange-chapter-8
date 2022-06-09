@@ -2,6 +2,23 @@ const request = require('supertest');
 const app = require('../../../app');
 
 describe('GET /v1/cars', () => {
+  let token;
+
+  beforeAll((done) => {
+    request(app)
+      .post('/v1/auth/login')
+      .send({
+        email: 'adji@binar.com',
+        password: 'rahasia',
+      })
+      .expect(201)
+      .end((err, res) => {
+        if(err) throw err;
+        token = res.body.token;
+        done();
+      });
+  });
+  
   it("should response with 201 as status code", async () => {
     const name = "BMW i4";
     const price = 100000;
@@ -11,17 +28,19 @@ describe('GET /v1/cars', () => {
     return request(app)
       .post("/v1/cars")
       .set("Content-Type", "application/json")
+      .set("authorization", `Bearer ${token}`)
       .send({ name, price, size, image })
       .then((res) => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
           expect.objectContaining({
-            ...res.body,
-            name,
-            price,
-            size,
-            image,
-            isCurrentlyRented,
+            car: {
+              name: expect.any(String),
+              price: expect.any(Number),
+              size: expect.any(String),
+              image: expect.any(String),
+              isCurrentlyRented: expect.any(Boolean),
+            }
           })
         );
       });
@@ -36,6 +55,7 @@ describe('GET /v1/cars', () => {
     return request(app)
       .post("/v1/cars")
       .set("Content-Type", "application/json")
+      .set("authorization", `Bearer ${token}`)
       .send({ name, price, size, image })
       .then((res) => {
         expect(res.statusCode).toBe(422);

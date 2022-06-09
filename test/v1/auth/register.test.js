@@ -3,9 +3,9 @@ const app = require('../../../app');
 
 describe('POST /v1/auth/register', () => {
   it("should response with 201 as status code", async () => {
-    const name = "adji";
-    const email = "adji@binar.com";
     const password = "rahasia";
+    const name = "adji" + new Date();
+    const email = name + "@binar.co.id";
 
     return request(app)
       .post("/v1/auth/register")
@@ -15,7 +15,6 @@ describe('POST /v1/auth/register', () => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
           expect.objectContaining({
-            ...res.body,
             accessToken
           })
         );
@@ -24,8 +23,8 @@ describe('POST /v1/auth/register', () => {
 
   it("should response with 422 as status code", async () => {
     const name = "adji";
-    const email = "adji@binar.com";
-    const password = "rahasia";
+    const email = "fikri@binar.co.id";
+    const password = "123456";
 
     return request(app)
       .post("/v1/auth/register")
