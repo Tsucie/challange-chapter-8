@@ -14,7 +14,7 @@ describe('GET /v1/cars', () => {
       .expect(201)
       .end((err, res) => {
         if(err) throw err;
-        token = res.body.token;
+        token = res.body.accessToken;
         done();
       });
   });
@@ -28,19 +28,20 @@ describe('GET /v1/cars', () => {
     return request(app)
       .post("/v1/cars")
       .set("Content-Type", "application/json")
-      .set("authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
       .send({ name, price, size, image })
       .then((res) => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
           expect.objectContaining({
-            car: {
-              name: expect.any(String),
-              price: expect.any(Number),
-              size: expect.any(String),
-              image: expect.any(String),
-              isCurrentlyRented: expect.any(Boolean),
-            }
+            createdAt: expect.any(String),
+            id: expect.any(Number),
+            image: expect.any(String),
+            isCurrentlyRented: expect.any(Boolean),
+            name: expect.any(String),
+            price: expect.any(Number),
+            size: expect.any(String),
+            updatedAt: expect.any(String),
           })
         );
       });
@@ -55,13 +56,13 @@ describe('GET /v1/cars', () => {
     return request(app)
       .post("/v1/cars")
       .set("Content-Type", "application/json")
-      .set("authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
       .send({ name, price, size, image })
       .then((res) => {
         expect(res.statusCode).toBe(422);
         expect(res.body).toEqual(
           expect.objectContaining({
-            err: {
+            error: {
               name: expect.any(String),
               message: expect.any(String),
             }

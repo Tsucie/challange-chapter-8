@@ -27,15 +27,11 @@ describe('GET /v1/cars', () => {
       .then((res) => {
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              name: car.name,
-              price: car.price,
-              size: car.size,
-              image: car.image,
-              isCurrentlyRented: car.isCurrentlyRented,
-            }),
-          ]),
+          expect.objectContaining({
+            cars: expect.arrayContaining([
+              expect.objectContaining({}),
+            ])
+          }),
           expect.objectContaining({
             pagination: expect.any(Object),
           })

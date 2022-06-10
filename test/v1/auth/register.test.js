@@ -15,14 +15,14 @@ describe('POST /v1/auth/register', () => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
           expect.objectContaining({
-            accessToken
+            accessToken: expect.any(String),
           })
         );
       });
   });
 
   it("should response with 422 as status code", async () => {
-    const name = "adji";
+    const name = "fikri";
     const email = "fikri@binar.co.id";
     const password = "123456";
 
@@ -34,7 +34,7 @@ describe('POST /v1/auth/register', () => {
         expect(res.statusCode).toBe(422);
         expect(res.body).toEqual(
           expect.objectContaining({
-            err: {
+            error: {
               name: expect.any(String),
               message: expect.any(String),
             },

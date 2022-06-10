@@ -14,7 +14,7 @@ describe('PUT /v1/cars/:id', () => {
       .expect(201)
       .end((err, res) => {
         if(err) throw err;
-        token = res.body.token;
+        token = res.body.accessToken;
         done();
       });
   });
@@ -41,17 +41,17 @@ describe('PUT /v1/cars/:id', () => {
     return request(app)
       .put(`/v1/cars/${car.id}`)
       .set("Content-Type", "application/json")
-      .set("authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
       .send({ name, price, size, image })
       .then((res) => {
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual(
           expect.objectContaining({
-            name,
-            price,
-            size,
-            image,
-            isCurrentlyRented,
+            name: expect.any(String),
+            price: expect.any(Number),
+            size: expect.any(String),
+            image: expect.any(String),
+            isCurrentlyRented: expect.any(Boolean),
           })
         );
       });
@@ -66,13 +66,13 @@ describe('PUT /v1/cars/:id', () => {
     return request(app)
       .put(`/v1/cars/${car.id}`)
       .set("Content-Type", "application/json")
-      .set("authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
       .send({ name, price, size, image })
       .then((res) => {
         expect(res.statusCode).toBe(422);
         expect(res.body).toEqual(
           expect.objectContaining({
-            err: {
+            error: {
               name: expect.any(String),
               message: expect.any(String),
             }

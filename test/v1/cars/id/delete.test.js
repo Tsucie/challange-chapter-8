@@ -14,7 +14,7 @@ describe('DELETE /v1/cars/:id', () => {
       .expect(201)
       .end((err, res) => {
         if(err) throw err;
-        token = res.body.token;
+        token = res.body.accessToken;
         done();
       });
   });
@@ -30,12 +30,12 @@ describe('DELETE /v1/cars/:id', () => {
     });
     return car;
   });
-  afterEach(() => car.destroy());
 
   it("should response with 204 as status code", async () => {
+    jest.setTimeout(240000);
     return request(app)
       .delete(`/v1/cars/${car.id}`)
-      .set("authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
       .then((res) => {
         expect(res.statusCode).toBe(204);
       });

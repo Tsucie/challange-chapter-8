@@ -14,7 +14,7 @@ describe('POST /v1/cars/:id/rent', () => {
       .expect(201)
       .end((err, res) => {
         if(err) throw err;
-        token = res.body.token;
+        token = res.body.accessToken;
         done();
       });
   });
@@ -33,34 +33,44 @@ describe('POST /v1/cars/:id/rent', () => {
   afterEach(() => car.destroy());
 
   it("should response with 201 as status code", async () => {
+    const rentStartedAt = new Date();
+    const rentEndedAt = new Date();
+
     return request(app)
       .post(`/v1/cars/${car.id}/rent`)
       .set("Content-Type", "application/json")
-      .set("authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ rentStartedAt, rentEndedAt })
       .then((res) => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
           expect.objectContaining({
-            ...res.body,
-            userId,
-            carId,
-            rentStartedAt,
-            rentEndedAt,
+            carId: expect.any(Number),
+            createdAt: expect.any(String),
+            id: expect.any(Number),
+            rentEndedAt: expect.any(String),
+            rentStartedAt: expect.any(String),
+            updatedAt: expect.any(String),
+            userId: expect.any(Number),
           })
         );
       });
   });
 
   it("should response with 422 as status code", async () => {
+    const rentStartedAt = new Date();
+    const rentEndedAt = new Date();
+
     return request(app)
       .post(`/v1/cars/${car.id}/rent`)
       .set("Content-Type", "application/json")
-      .set("authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ rentStartedAt, rentEndedAt })
       .then((res) => {
         expect(res.statusCode).toBe(422);
         expect(res.body).toEqual(
           expect.objectContaining({
-            err: {
+            error: {
               name: expect.any(String),
               message: expect.any(String),
             }
