@@ -9,7 +9,7 @@ describe('GET /v1/cars', () => {
       .post('/v1/auth/login')
       .send({
         email: 'adji@binar.com',
-        password: 'rahasia',
+        password: '123456',
       })
       .expect(201)
       .end((err, res) => {

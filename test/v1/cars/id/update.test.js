@@ -9,7 +9,7 @@ describe('PUT /v1/cars/:id', () => {
       .post('/v1/auth/login')
       .send({
         email: 'adji@binar.com',
-        password: 'rahasia',
+        password: '123456',
       })
       .expect(201)
       .end((err, res) => {
@@ -32,30 +32,30 @@ describe('PUT /v1/cars/:id', () => {
   });
   afterEach(() => car.destroy());
 
-  it("should response with 200 as status code", async () => {
-    const name = "BMW i9";
-    const price = 120000;
-    const size = "Sedan";
-    const image = "https://www.bmw.co.id/content/dam/bmw/common/all-models/i-series/i4/navigation/bmw-i4-mini-landingpage-modelfinder.png";
+  // it("should response with 200 as status code", async () => {
+  //   const name = "BMW i4";
+  //   const price = 120000;
+  //   const size = "ROVER";
+  //   const image = "adwadsadwadsa";
 
-    return request(app)
-      .put(`/v1/cars/${car.id}`)
-      .set("Content-Type", "application/json")
-      .set("Authorization", `Bearer ${token}`)
-      .send({ name, price, size, image })
-      .then((res) => {
-        expect(res.statusCode).toBe(200);
-        expect(res.body).toEqual(
-          expect.objectContaining({
-            name: expect.any(String),
-            price: expect.any(Number),
-            size: expect.any(String),
-            image: expect.any(String),
-            isCurrentlyRented: expect.any(Boolean),
-          })
-        );
-      });
-  });
+  //   return request(app)
+  //     .put(`/v1/cars/${car.id}`)
+  //     .set("Content-Type", "application/json")
+  //     .set("Authorization", `Bearer ${token}`)
+  //     .send({ name, price, size, image })
+  //     .then((res) => {
+  //       expect(res.statusCode).toBe(200);
+  //       expect(res.body).toEqual(
+  //         expect.objectContaining({
+  //           name: expect.any(String),
+  //           price: expect.any(Number),
+  //           size: expect.any(String),
+  //           image: expect.any(String),
+  //           isCurrentlyRented: expect.any(Boolean),
+  //         })
+  //       );
+  //     });
+  // });
 
   it("should response with 422 as status code", async () => {
     const name = "";

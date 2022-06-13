@@ -1,9 +1,9 @@
 const {
-  DB_USER = "otmbjylx",
-  DB_PASSWORD = "KVc8_Zc4-XjznT5Ztr4tx1OztjQFPM9L",
-  DB_NAME = "otmbjylx",
-  DB_HOST = "topsy.db.elephantsql.com",
-  // DB_PORT = "5432",
+  DB_USER = "postgres", // "otmbjylx",
+  DB_PASSWORD = "kiki082110", // "KVc8_Zc4-XjznT5Ztr4tx1OztjQFPM9L",
+  DB_NAME = "binarcar", // "otmbjylx",
+  DB_HOST = "localhost", // "topsy.db.elephantsql.com",
+  DB_PORT = "5432",
 } = process.env;
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     password: DB_PASSWORD,
     database: `${DB_NAME}`,
     host: DB_HOST,
-    // port: DB_PORT,
+    port: DB_PORT,
     dialect: "postgres"
   },
   test: {
@@ -20,7 +20,7 @@ module.exports = {
     password: DB_PASSWORD,
     database: `${DB_NAME}`,
     host: DB_HOST,
-    // port: DB_PORT,
+    port: DB_PORT,
     dialect: "postgres"
   },
   production: {
@@ -28,7 +28,7 @@ module.exports = {
     password: DB_PASSWORD,
     database: `${DB_NAME}`,
     host: DB_HOST,
-    // port: DB_PORT,
+    port: DB_PORT,
     dialect: "postgres"
   }
 }

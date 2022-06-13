@@ -3,8 +3,8 @@ const app = require('../../../app');
 
 describe('POST /v1/auth/login', () => {
   it("should response with 201 as status code", async () => {
-    const email = "adji@binar.com";
-    const password = "rahasia";
+    const email = "fikri@binar.co.id";
+    const password = "123456";
 
     return request(app)
       .post("/v1/auth/login")
@@ -43,7 +43,7 @@ describe('POST /v1/auth/login', () => {
   });
 
   it("should response with 401 as status code", async () => {
-    const email = "adji@binar.com";
+    const email = "fikri@binar.co.id";
     const password = "abogoboga";
 
     return request(app)

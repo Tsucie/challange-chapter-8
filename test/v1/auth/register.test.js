@@ -2,12 +2,12 @@ const request = require('supertest');
 const app = require('../../../app');
 
 describe('POST /v1/auth/register', () => {
-  it("should response with 201 as status code", async () => {
+  it("should response with 201 as status code", () => {
     const password = "rahasia";
     const name = "adji" + new Date();
     const email = name + "@binar.co.id";
 
-    return request(app)
+    request(app)
       .post("/v1/auth/register")
       .set("Content-Type", "application/json")
       .send({ name, email, password })
@@ -21,12 +21,12 @@ describe('POST /v1/auth/register', () => {
       });
   });
 
-  it("should response with 422 as status code", async () => {
+  it("should response with 422 as status code", () => {
     const name = "fikri";
     const email = "fikri@binar.co.id";
     const password = "123456";
 
-    return request(app)
+    request(app)
       .post("/v1/auth/register")
       .set("Content-Type", "application/json")
       .send({ name, email, password })

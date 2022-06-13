@@ -19,14 +19,14 @@ describe('GET /v1/auth/whoami', () => {
       });
   });
 
-  it("should response with 200 as status code", async () => {
-    // const userParam = { id: 3 };
+  it("should response with 200 as status code", () => {
+    const userParam = { id: 2 };
 
-    return request(app)
+    request(app)
       .post("/v1/auth/whoami")
       .set("Content-Type", "application/json")
       .set("Authorization", `Bearer ${token}`)
-      // .send({ user: userParam })
+      .send({ user: userParam })
       .then((res) => {
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual(
@@ -37,13 +37,13 @@ describe('GET /v1/auth/whoami', () => {
       });
   });
 
-  it("should response with 404 as status code", async () => {
-    // const userParam = { id: 1 };
+  it("should response with 404 as status code", () => {
+    const userParam = { id: 1 };
 
-    return request(app)
+    request(app)
       .post("/v1/auth/whoami")
       .set("Content-Type", "application/json")
-      // .send({ user: userParam })
+      .send({ user: userParam })
       .then((res) => {
         expect(res.statusCode).toBe(404);
         expect(res.body).toEqual(
